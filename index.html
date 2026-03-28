@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cerdo de autor — Charcutería premium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --tile-bg: #fafafa;
+      --tile-grout: #e0e0e0;
+      --title-text: #333333;
+      --gray-info: #5b5b5b;
+      --name-text: #b0b0b0;
+      --price-text: #ffffff;
+      --btn-cart: #2d2d2d;
+      --btn-agotado: #9e9e9e;
+      --white: #ffffff;
+      --card-border: #4a4a4a;
+      --ink: #1a1a1a;
+      --muted: #5c5c5c;
+      --cream: #f6f3ef;
+      --accent: #c45c26;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      background: var(--white);
+      color: var(--ink);
+    }
+
+    /* ——— Header ——— */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      animation: headerSlideDown 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes headerSlideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    /* Tu logo: colocá el archivo en assets/logo.png (o cambiá la ruta en los <img>) */
+    .logo--mark {
+      gap: 0.6rem;
+    }
+
+    .logo__img {
+      display: block;
+      height: 44px;
+      width: auto;
+      max-width: min(200px, 42vw);
+      object-fit: contain;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    .logo--mark:hover .logo__img {
+      transform: scale(1.05);
+      filter: drop-shadow(0 4px 12px rgba(196, 92, 38, 0.35));
+    }
+
+    .logo__wordmark {
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    @media (max-width: 480px) {
+      .logo__wordmark {
+        display: none;
+      }
+
+      .logo__img {
+        max-width: 52vw;
+      }
+    }
+
+    /* Logo grande en hero (llamativo) */
+    .hero__brand {
+      margin: 0 auto 1.35rem;
+      animation: heroLogoIn 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .hero__brand-ring {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(0.75rem, 2.5vw, 1.25rem) clamp(1rem, 3vw, 1.75rem);
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 2px solid rgba(255, 255, 255, 0.38);
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+        0 24px 56px rgba(0, 0, 0, 0.45),
+        0 0 80px rgba(196, 92, 38, 0.35);
+      animation: heroLogoGlow 4.5s ease-in-out infinite alternate;
+    }
+
+    .hero__brand-img {
+      display: block;
+      max-height: clamp(88px, 18vw, 148px);
+      width: auto;
+      max-width: min(320px, 85vw);
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.45));
+    }
+
+    @keyframes heroLogoIn {
+      from {
+        opacity: 0;
+        transform: translateY(24px) scale(0.94);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes heroLogoGlow {
+      from {
+        box-shadow:
+          0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+          0 20px 48px rgba(0, 0, 0, 0.4),
+          0 0 64px rgba(196, 92, 38, 0.28);
+      }
+      to {
+        box-shadow:
+          0 0 0 1px rgba(255, 255, 255, 0.18) inset,
+          0 28px 64px rgba(0, 0, 0, 0.5),
+          0 0 96px rgba(196, 92, 38, 0.5);
+      }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+    }
+
+    .nav-cta {
+      background: var(--ink);
+      color: var(--white) !important;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+    }
+
+    .nav-cta:hover {
+      filter: brightness(1.1);
+    }
+
+    @media (max-width: 640px) {
+      .nav-links li:not(:last-child) {
+        display: none;
+      }
+    }
+
+    /* ——— Hero (inicio — animaciones) ——— */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5rem 1.5rem 3rem;
+      overflow: hidden;
+    }
+
+    .hero__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero__bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.08);
+      animation: heroKenBurns 22s ease-in-out infinite alternate;
+    }
+
+    @keyframes heroKenBurns {
+      to {
+        transform: scale(1.15);
+      }
+    }
+
+    .hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        105deg,
+        rgba(10, 8, 6, 0.85) 0%,
+        rgba(26, 20, 16, 0.55) 45%,
+        rgba(40, 28, 20, 0.35) 100%
+      );
+      animation: heroOverlayIn 1.2s ease-out both;
+    }
+
+    @keyframes heroOverlayIn {
+      from {
+        opacity: 0;
+      }
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      text-align: center;
+      color: var(--white);
+    }
+
+    .hero__badge {
+      display: inline-block;
+      margin-bottom: 1rem;
+      padding: 0.35rem 0.9rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 999px;
+      opacity: 0;
+      animation: heroFadeUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+    }
+
+    .hero h1 {
+      margin: 0 0 1rem;
+      font-size: clamp(2.1rem, 6vw, 3.35rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      opacity: 0;
+      animation: heroFadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
+    }
+
+    .hero__lead {
+      margin: 0 auto 1.75rem;
+      max-width: 34ch;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.88);
+      opacity: 0;
+      animation: heroFadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.65s both;
+    }
+
+    .hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+      opacity: 0;
+      animation: heroFadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.85s both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.85rem 1.5rem;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn--primary {
+      background: var(--white);
+      color: var(--ink);
+    }
+
+    .btn--primary:hover {
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn--ghost {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid rgba(255, 255, 255, 0.45);
+    }
+
+    .btn--ghost:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .hero__scroll {
+      position: absolute;
+      bottom: 1.75rem;
+      left: 50%;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.65);
+      opacity: 0;
+      animation: heroScrollIn 1s ease 1.1s both, heroScrollBounce 2.2s ease-in-out 2.25s infinite;
+    }
+
+    @keyframes heroFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(28px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes heroScrollIn {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(28px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    @keyframes heroScrollBounce {
+      0%,
+      100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      50% {
+        transform: translateX(-50%) translateY(6px);
+      }
+    }
+
+    .hero__scroll-line {
+      width: 1px;
+      height: 36px;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), transparent);
+    }
+
+    /* ——— Revelado al scroll (medio / final) ——— */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal--scale {
+      transform: scale(0.96);
+    }
+
+    .reveal--scale.is-visible {
+      transform: scale(1);
+    }
+
+    /* ——— Split (medio) ——— */
+    .split {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      max-width: 1200px;
+      margin: 0 auto;
+      min-height: min(90vh, 720px);
+    }
+
+    @media (min-width: 900px) {
+      .split {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .split__visual {
+      position: relative;
+      min-height: 280px;
+      overflow: hidden;
+    }
+
+    .split__visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .split.is-visible .split__visual img {
+      transform: scale(1.03);
+    }
+
+    .split__body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(2rem, 5vw, 4rem);
+      background: var(--cream);
+    }
+
+    .eyebrow {
+      margin: 0 0 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .split__body h2 {
+      margin: 0 0 1rem;
+      font-size: clamp(1.6rem, 3.5vw, 2.1rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .split__body p {
+      margin: 0 0 1rem;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 1rem;
+    }
+
+    /* ——— Features (medio) ——— */
+    .features {
+      padding: clamp(3rem, 8vw, 5rem) 1.5rem;
+      background: var(--white);
+    }
+
+    .features__inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .features__head {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .features__head h2 {
+      margin: 0 0 0.5rem;
+      font-size: clamp(1.5rem, 3vw, 1.85rem);
+      font-weight: 700;
+    }
+
+    .features__head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .feature-card {
+      padding: 1.5rem;
+      border-radius: 16px;
+      background: var(--cream);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    .feature-card__icon {
+      width: 44px;
+      height: 44px;
+      margin-bottom: 1rem;
+      border-radius: 12px;
+      background: var(--ink);
+      color: var(--white);
+      display: grid;
+      place-items: center;
+      font-size: 1.15rem;
+    }
+
+    .feature-card h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .feature-card p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ——— CTA banda (intermedio / antes del footer) ——— */
+    .cta-band {
+      position: relative;
+      padding: clamp(3.5rem, 10vw, 5.5rem) 1.5rem;
+      overflow: hidden;
+    }
+
+    .cta-band__bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .cta-band__bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.45);
+    }
+
+    .cta-band__inner {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+      color: var(--white);
+    }
+
+    .cta-band__inner h2 {
+      margin: 0 0 0.75rem;
+      font-size: clamp(1.5rem, 3.5vw, 2rem);
+      font-weight: 700;
+    }
+
+    .cta-band__inner p {
+      margin: 0 0 1.5rem;
+      opacity: 0.92;
+      line-height: 1.55;
+    }
+
+    .cta-band__shine {
+      position: absolute;
+      inset: -50% -20%;
+      background: linear-gradient(
+        105deg,
+        transparent 40%,
+        rgba(255, 255, 255, 0.06) 50%,
+        transparent 60%
+      );
+      animation: ctaShine 8s ease-in-out infinite;
+    }
+
+    @keyframes ctaShine {
+      0%,
+      100% {
+        transform: translateX(-30%) rotate(12deg);
+      }
+      50% {
+        transform: translateX(30%) rotate(12deg);
+      }
+    }
+
+    /* ——— Charcutería (existente) ——— */
+    .charcuteria {
+      max-width: 1200px;
+      margin: 0 auto;
+      font-family: "Roboto Condensed", Arial, sans-serif;
+    }
+
+    .banner {
+      display: flex;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .banner img {
+      flex: 1 1 0;
+      min-width: 0;
+      height: 140px;
+      object-fit: cover;
+      display: block;
+    }
+
+    @media (min-width: 768px) {
+      .banner img {
+        height: 180px;
+      }
+    }
+
+    .charcuteria__panel {
+      background-color: var(--tile-bg);
+      background-image:
+        linear-gradient(var(--tile-grout) 2px, transparent 2px),
+        linear-gradient(90deg, var(--tile-grout) 2px, transparent 2px);
+      background-size: 28px 28px;
+      background-position: center top;
+      padding: 1.75rem 12px 2rem;
+    }
+
+    .charcuteria__panel h2 {
+      margin: 0 0 1.25rem;
+      text-align: center;
+      font-size: clamp(1.4rem, 3.8vw, 1.95rem);
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--title-text);
+      text-transform: uppercase;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 900px) {
+      .products {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--card-border);
+      min-height: 100%;
+      background: var(--white);
+    }
+
+    .card__image {
+      aspect-ratio: 1 / 1;
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+    }
+
+    .card__image img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .card__info {
+      flex: 1 1 auto;
+      background: var(--gray-info);
+      padding: 12px 14px 10px;
+      font-size: 0.82rem;
+      line-height: 1.3;
+    }
+
+    .card__info .name {
+      margin: 0 0 6px;
+      font-weight: 400;
+      color: var(--name-text);
+    }
+
+    .card__info .price {
+      margin: 0;
+      font-weight: 700;
+      font-size: 1.08rem;
+      color: var(--price-text);
+    }
+
+    .card__btn {
+      display: block;
+      width: 100%;
+      border: none;
+      padding: 11px 8px;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      color: var(--price-text);
+      text-align: center;
+    }
+
+    .card__btn--stock {
+      background: var(--btn-agotado);
+      cursor: not-allowed;
+    }
+
+    .card__btn--cart {
+      background: var(--btn-cart);
+    }
+
+    .card__btn--cart:hover {
+      filter: brightness(1.07);
+    }
+
+    /* ——— Footer (final — animación) ——— */
+    .site-footer {
+      background: var(--ink);
+      color: rgba(255, 255, 255, 0.78);
+      padding: clamp(2.5rem, 6vw, 3.5rem) 1.5rem 2rem;
+    }
+
+    .site-footer__grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    @media (min-width: 700px) {
+      .site-footer__grid {
+        grid-template-columns: 1.2fr 1fr 1fr;
+      }
+    }
+
+    .site-footer .brand {
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--white);
+    }
+
+    .site-footer .brand span {
+      color: var(--accent);
+    }
+
+    .brand--with-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.85rem;
+    }
+
+    .brand__img {
+      height: 40px;
+      width: auto;
+      max-width: 200px;
+      object-fit: contain;
+      opacity: 0.95;
+    }
+
+    .site-footer .brand__text {
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--white);
+    }
+
+    .site-footer .brand__text span {
+      color: var(--accent);
+    }
+
+    .site-footer p {
+      margin: 0.75rem 0 0;
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .site-footer h4 {
+      margin: 0 0 0.75rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .site-footer ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .site-footer a {
+      color: rgba(255, 255, 255, 0.78);
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: block;
+      padding: 0.25rem 0;
+      transition: color 0.2s;
+    }
+
+    .site-footer a:hover {
+      color: var(--white);
+    }
+
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 2.5rem auto 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.8rem;
+      text-align: center;
+      opacity: 0.65;
+    }
+
+    .footer-glow {
+      height: 2px;
+      max-width: 120px;
+      margin: 0 auto 1.5rem;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      border-radius: 2px;
+      transform: scaleX(0);
+      transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .site-footer.is-visible .footer-glow {
+      transform: scaleX(1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      html {
+        scroll-behavior: auto;
+      }
+
+      .hero__bg img {
+        animation: none;
+        transform: scale(1);
+      }
+
+      .hero__brand-ring {
+        animation: none;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+
+      .reveal--scale.is-visible {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <!-- Tu logo: sustituí assets/logo.svg por tu PNG/SVG (misma ruta o actualizá src) -->
+    <a class="logo logo--mark" href="#" aria-label="El rincon de la paloma — inicio">
+      <img
+        class="logo__img"
+        src="imagen1.png"
+        alt=""
+        width="200"
+        height="64"
+        decoding="async"
+      />
+      <span class="logo__wordmark">El Rincon De<span> La Paloma</span></span>
+    </a>
+    <nav aria-label="Principal">
+      <ul class="nav-links">
+        <li><a href="#origen">Origen</a></li>
+        <li><a href="#valor">Calidad</a></li>
+        <li><a href="#charcuteria">Charcutería</a></li>
+        <li><a class="nav-cta" href="https://wa.me/573123394956?text=Hola,%20quiero%20hacer%20un%20pedido"">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-label="Presentación">
+      <div class="hero__bg" aria-hidden="true">
+        <img
+          src="imagen2.png"
+          alt=""
+          width="1920"
+          height="1080"
+          fetchpriority="high"
+        />
+      </div>
+      <div class="hero__overlay" aria-hidden="true"></div>
+      <div class="hero__content">
+        <div class="hero__brand">
+          <div class="hero__brand-ring">
+            <img
+              class="hero__brand-img"
+              src="imagen1.png"
+              alt="Cerdohaus"
+              width="200"
+              height="200"
+              decoding="async"
+            />
+          </div>
+        </div>
+        <p class="hero__badge">100% cerdo · selección premium</p>
+        <h1>Sabor honesto de la granja a tu mesa</h1>
+        <p class="hero__lead">
+          Charcutería y cortes de cerdo con trazabilidad, curado artesanal y el mismo cuidado en cada pieza.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#charcuteria">Ver productos</a>
+          <a class="btn btn--ghost" href="#origen">Nuestra historia</a>
+        </div>
+      </div>
+      <div class="hero__scroll" aria-hidden="true">
+        <span>Deslizá</span>
+        <div class="hero__scroll-line"></div>
+      </div>
+    </section>
+
+    <section id="origen" class="split reveal" aria-labelledby="origen-title">
+      <div class="split__visual">
+        <img
+          src="https://images.unsplash.com/photo-1604503468506-a8da13d82791?auto=format&fit=crop&w=1000&q=80"
+          alt="Chuletas y cortes de cerdo premium"
+          width="1000"
+          height="1200"
+          loading="lazy"
+        />
+      </div>
+      <div class="split__body">
+        <p class="eyebrow">Origen</p>
+        <h2 id="origen-title">Criamos el sabor en cada corte</h2>
+        <p>
+          Trabajamos con proveedores que priorizan el bienestar animal y la alimentación natural. Eso se nota en la textura suave del lomo, en el punto perfecto del chorizo y en el aroma irresistible de la panceta ahumada.
+        </p>
+        <p>
+          Cada corte que ofrecemos refleja frescura, calidad y el compromiso de llevar a tu mesa un producto confiable, lleno de sabor y tradición.
+        </p>
+      </div>
+    </section>
+
+    <section id="valor" class="features reveal" aria-labelledby="valor-title">
+      <div class="features__inner">
+        <div class="features__head">
+          <p class="eyebrow" style="margin-bottom: 0.35rem">Por qué elegirnos</p>
+          <h2 id="valor-title">Tres pilares que nos definen</h2>
+          <p>Transparencia, oficio y entrega en cada pedido.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-card__icon" aria-hidden="true">◎</div>
+            <h3>Trazabilidad</h3>
+            <p>Sabrás de dónde proviene cada corte y cómo es su proceso, garantizando confianza y calidad.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-card__icon" aria-hidden="true">✦</div>
+            <h3>Curado artesanal</h3>
+            <p>Elaboramos nuestros embutidos con procesos tradicionales que resaltan el sabor y la calidad.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-card__icon" aria-hidden="true">→</div>
+            <h3>Envíos frescos</h3>
+            <p>Entregamos productos frescos, bien conservados y listos para disfrutar.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="charcuteria"
+      class="charcuteria reveal reveal--scale"
+      aria-label="Charcutería, productos de cerdo"
+    >
+      <div class="banner">
+        <img
+          src="imagen4.png"
+          alt="Cerdo asado"
+          width="400"
+          height="200"
+          loading="lazy"
+        />
+        <img
+          src="imagen5.png"
+          alt="Panceta y cerdo"
+          width="400"
+          height="200"
+          loading="lazy"
+        />
+        <img
+          src="imagen6.png"
+          alt="Embutidos de cerdo"
+          width="400"
+          height="200"
+          loading="lazy"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80"
+          alt="Costillas"
+          width="400"
+          height="200"
+          loading="lazy"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1604503468506-a8da13d82791?auto=format&fit=crop&w=400&q=80"
+          alt="Chuletas"
+          width="400"
+          height="200"
+          loading="lazy"
+        />
+      </div>
+
+      <div class="charcuteria__panel">
+        <h2>Portafolio</h2>
+
+        <div class="products">
+          <article class="card">
+            <div class="card__image">
+              <img
+                src="imagen7.png"
+                alt="Jamón de cerdo curado"
+                width="400"
+                height="400"
+                loading="lazy"
+              />
+            </div>
+            <div class="card__info">
+              <p class="name">carne de cerdo</p>
+              <p class="price">$ 8.500 la libra</p>
+            </div>
+            <button type="button" class="card__btn card__btn--stock" disabled>Agregar al carrito</button>
+          </article>
+
+          <article class="card">
+            <div class="card__image">
+              <img
+                src="imagen8.png"
+                alt="Lomo de cerdo braseado"
+                width="400"
+                height="400"
+                loading="lazy"
+              />
+            </div>
+            <div class="card__info">
+              <p class="name">Lomo de cerdo</p>
+              <p class="price">$ 9.000 la libra</p>
+            </div>
+            <button type="button" class="card__btn card__btn--stock" disabled>Agregar al carrito</button>
+          </article>
+
+          <article class="card">
+            <div class="card__image">
+              <img
+                src="imagen9.png"
+                alt="Chorizo vela de cerdo picante"
+                width="400"
+                height="400"
+                loading="lazy"
+              />
+            </div>
+            <div class="card__info">
+              <p class="name">Costillas</p>
+              <p class="price">$ 10.000 la libra</p>
+            </div>
+            <button type="button" class="card__btn card__btn--cart">Agregar al carrito</button>
+          </article>
+
+          <article class="card">
+            <div class="card__image">
+              <img
+                src="imagen10.png"
+                alt="Chorizo ibérico de bellota"
+                width="400"
+                height="400"
+                loading="lazy"
+              />
+            </div>
+            <div class="card__info">
+              <p class="name">Panceta</p>
+              <p class="price">$ 9.000 la libra</p>
+            </div>
+            <button type="button" class="card__btn card__btn--cart">Agregar al carrito</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto" class="cta-band reveal" aria-labelledby="cta-title">
+      <div class="cta-band__bg" aria-hidden="true">
+        <img
+          src="imagen3.png"
+          alt=""
+          width="1600"
+          height="900"
+          loading="lazy"
+        />
+        <div class="cta-band__shine"></div>
+      </div>
+      <div class="cta-band__inner">
+        <h2 id="cta-title">¿Hacemos tu próximo pedido?</h2>
+        <p>
+          Escribinos por WhatsApp o dejá tu correo: te respondemos con disponibilidad y cortes del día.
+        </p>
+        <a class="btn btn--primary" href="https://wa.me/573123394956?text=Hola,%20quiero%20hacer%20un%20pedido"
+        target="_blank"
+       class="btn-contacto">
+       Contactar</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer reveal" id="footer">
+    <div class="footer-glow" aria-hidden="true"></div>
+    <div class="site-footer__grid">
+      <div>
+        <div class="brand brand--with-logo">
+          <img class="brand__img" src="imagen1.png" alt="" width="200" height="64" decoding="async" />
+          <div class="brand__text">El Rincon De<span> La Paloma</span></div>
+        </div>
+        <p>Charcutería y cortes de cerdo. Fotografías de muestra vía Unsplash (uso libre bajo su licencia).</p>
+      </div>
+      <div>
+        <h4>Enlaces</h4>
+        <ul>
+          <li><a href="#origen">Origen</a></li>
+          <li><a href="#charcuteria">Tienda</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacidad</a></li>
+          <li><a href="#">Términos</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="footer-bottom">© 2026 Cerdohaus. Estructura de landing de demostración.</p>
+  </footer>
+
+  <script>
+    (function () {
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce) {
+        document.querySelectorAll(".reveal").forEach(function (el) {
+          el.classList.add("is-visible");
+        });
+        return;
+      }
+      var observer = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+      );
+      document.querySelectorAll(".reveal").forEach(function (el) {
+        observer.observe(el);
+      });
+    })();
+  </script>
+</body>
+</html>
